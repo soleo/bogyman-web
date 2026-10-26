@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bogyman — your agents haunt you. Haunt them back.</title>
+<meta name="description" content="Bogyman is a tiny Rust CLI that watches your Claude Code and Codex sessions, tells you which one has been waiting longest and why, and chases you down to deal with it.">
+<meta property="og:title" content="Bogyman — your agents haunt you. Haunt them back.">
+<meta property="og:description" content="A single-binary CLI that knows which of your agent sessions is blocked, what it's stuck on, and how long it has been waiting.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#fbf7ee">
+<link rel="icon" href="bogyman.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div style="min-height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+
+  <svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 1440 5600" preserveAspectRatio="none" style="position: absolute; inset: 0; pointer-events: none; opacity: .9;">
+    <g fill="#141413"><circle cx="120" cy="380" r="3"/><circle cx="1320" cy="210" r="2.5"/><circle cx="1380" cy="900" r="3.5"/><circle cx="60" cy="1400" r="2.5"/><circle cx="1400" cy="2100" r="3"/><circle cx="90" cy="2600" r="3"/><circle cx="1350" cy="3300" r="2.5"/><circle cx="140" cy="3900" r="3.5"/><circle cx="1300" cy="4500" r="3"/><circle cx="80" cy="5100" r="2.5"/><circle cx="700" cy="60" r="2"/><circle cx="1180" cy="1700" r="2"/><circle cx="260" cy="2200" r="2"/><circle cx="900" cy="4900" r="2.5"/></g>
+  </svg>
+
+  <header class="wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 22px; padding-bottom: 10px; flex-wrap: wrap; position: relative;">
+    <a href="#top" class="hand" style="display: flex; align-items: center; gap: 10px; font-size: 30px;"><img src="bogyman.svg" alt="" style="width: 36px; height: 44px;">bogyman</a>
+    <nav class="nav hand" aria-label="Site" style="display: flex; gap: 26px; align-items: center; flex-wrap: wrap;">
+      <a href="#can">What it does</a>
+      <a href="#day">A haunted day</a>
+      <a href="#commands">Commands</a>
+      <a href="#coverage">What it sees</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/soleo" class="ink" style="padding: 6px 16px; background: #fff; box-shadow: 3px 3px 0 #141413;">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+  <section id="top" class="wrap hero" style="padding-top: 48px; padding-bottom: 24px; display: flex; gap: 40px; align-items: center; position: relative;">
+    <div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 20px; min-width: 0;">
+      <span class="mono ink2 accent" style="align-self: flex-start; font-size: 13px; padding: 5px 12px; transform: rotate(-2deg);">Rust · single binary · macOS &amp; Linux · MIT</span>
+      <h1 class="hand hero-h1" style="margin: 0; font-size: 84px; line-height: .95; font-weight: 400;">Your agents haunt you.<br>Haunt them <span class="hl">back.</span></h1>
+      <p style="margin: 0; max-width: 620px; font-size: 22px; line-height: 1.45;">Six Claude Code and Codex sessions, and every one of them wants something from you: a permission, an answer, a nudge. <strong class="mono" style="font-size: 18px;">bogyman</strong> is the thing under your desk that knows which agent has been waiting longest, what it's stuck on, and chases <em>you</em> down to deal with it. It never touches your terminals, tmux, or worktrees. It just stares.</p>
+      <div class="hero-ctas" style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px;">
+        <a href="#install" class="mono ink card accent" style="display: inline-block; padding: 12px 20px; font-weight: 600; font-size: 15px;">brew install bogyman</a>
+        <a href="#day" class="hand ink2 card" style="display: inline-block; padding: 10px 20px; font-size: 22px;">See a haunted day →</a>
+      </div>
+    </div>
+    <div class="hero-art" style="flex: 0 0 auto; position: relative; display: flex; flex-direction: column; align-items: center;">
+      <img class="logo-big" src="bogyman.svg" alt="Bogyman, a scruffy ghost with half-closed eyes, looking unimpressed" style="width: 300px; height: auto; display: block;">
+      <div class="hand ink card" style="position: absolute; top: 10px; right: -30px; padding: 8px 14px; font-size: 20px; transform: rotate(6deg); background: #fff;">…you there?</div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom: 8px; position: relative;">
+    <div class="term ink card" style="overflow: hidden; background: #fff; border-radius: 16px 240px 16px 230px / 230px 16px 240px 16px;">
+      <div style="display: flex; gap: 8px; align-items: center; padding: 12px 20px; border-bottom: 2.5px dashed #141413;">
+        <span style="width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid #141413; display: block; background: #e5705b;"></span>
+        <span class="accent" style="width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid #141413; display: block;"></span>
+        <span style="width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid #141413; display: block; background: #7ccf9a;"></span>
+        <span class="hand" style="margin-left: auto; font-size: 18px;">~/dev — who's haunting me?</span>
+      </div>
+      <pre class="mono" style="padding: 18px 24px; font-size: 14px; line-height: 1.8;"><span class="prompt">$</span> bogyman waiting
+<span class="dim">  VENDOR   HOST       SESSION               WAITING FOR               AGE      CWD</span>
+<span class="dot-blocked">●</span> claude   terminal   flaky-test-fix        permission · npm test     <span class="wait">9m12s</span>    tag-web
+<span class="dot-blocked">●</span> claude   desktop    Auth module refactor  question · 2 options      <span class="wait">4m03s</span>    tag-web
+<span class="dot-blocked">●</span> codex    terminal   deps-audit            sandbox · registry.npm    41s      hapio
+
+<span class="prompt">$</span> bogyman focus flaky
+<span class="dim">→ raising iTerm2 tab ttys004. boo.</span>
+
+<span class="prompt">$</span> bogyman status
+<span class="dot-blocked">●3</span> <span class="dot-working">▶2</span> <span class="dot-done">✓1</span></pre>
+    </div>
+  </section>
+
+  <section class="wrap stats" style="padding-top: 40px; padding-bottom: 8px; display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; position: relative;">
+    <div class="ink card hand" style="padding: 12px 20px; font-size: 20px; transform: rotate(-2deg); background: #fff;"><b style="font-size: 30px; display: block; line-height: 1;">&lt;10 ms</b>hook path. never blocks an agent</div>
+    <div class="ink2 card hand accent" style="padding: 12px 20px; font-size: 20px; transform: rotate(1.5deg);"><b style="font-size: 30px; display: block; line-height: 1;">3 hosts</b>terminal · agent view · Claude Desktop</div>
+    <div class="ink card hand" style="padding: 12px 20px; font-size: 20px; transform: rotate(-1deg); background: #fff;"><b style="font-size: 30px; display: block; line-height: 1;">0</b>tmux, worktrees, or daemons required</div>
+    <div class="ink2 card hand" style="padding: 12px 20px; font-size: 20px; transform: rotate(2deg); background: #fff;"><b class="mono" style="font-size: 26px; display: block; line-height: 1.2;">--json</b>on every command</div>
+  </section>
+
+  <section id="can" class="wrap" style="padding-top: 80px; padding-bottom: 24px; display: flex; flex-direction: column; gap: 30px; position: relative;">
+    <div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+      <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">Four hauntings. One list.</h2>
+      <p class="lede" style="margin: 0; font-size: 21px; line-height: 1.45;">Bogyman watches the sessions you already started and answers the questions you keep alt-tabbing to answer yourself.</p>
+    </div>
+    <div class="grid4">
+      <div class="ink card tilt-l" style="padding: 22px; display: flex; flex-direction: column; gap: 8px;">
+        <span class="hand" aria-hidden="true" style="font-size: 40px; line-height: 1; color: #c98a0c;">?!</span>
+        <h3 class="hand" style="margin: 0; font-size: 28px; font-weight: 400;">Triage</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Blocked sessions, oldest wait first, with the reason: permission, question, sandbox, expired login. One command to jump there.</p>
+      </div>
+      <div class="ink2 card tilt-r" style="padding: 22px; display: flex; flex-direction: column; gap: 8px;">
+        <span class="hand" aria-hidden="true" style="font-size: 40px; line-height: 1; color: #2f8fb5;">3/7</span>
+        <h3 class="hand" style="margin: 0; font-size: 28px; font-weight: 400;">Progress</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">What each session is doing now, turn count, elapsed time, and task progress — <span class="mono" style="font-size: 14px;">3/7 · write tests</span> — when the vendor emits it.</p>
+      </div>
+      <div class="ink card tilt-l" style="padding: 22px; display: flex; flex-direction: column; gap: 8px;">
+        <span class="hand" aria-hidden="true" style="font-size: 40px; line-height: 1; color: #2e9e5b;">$$</span>
+        <h3 class="hand" style="margin: 0; font-size: 28px; font-weight: 400;">Cost &amp; quota</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Tokens per session and in total, model in use, and PR status pulled from the vendor's own feed. No scraping, no guessing.</p>
+      </div>
+      <div class="ink2 card tilt-r" style="padding: 22px; display: flex; flex-direction: column; gap: 8px;">
+        <span class="hand" aria-hidden="true" style="font-size: 40px; line-height: 1; color: #e5705b;">→</span>
+        <h3 class="hand" style="margin: 0; font-size: 28px; font-weight: 400;">Control</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Send a message, focus, attach, or stop — wrapping <span class="mono" style="font-size: 14px;">codex queue</span> and <span class="mono" style="font-size: 14px;">claude attach</span> so you never leave the terminal you're in.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="day" class="wrap" style="padding-top: 80px; padding-bottom: 24px; display: flex; flex-direction: column; gap: 30px; position: relative;">
+    <div style="display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+        <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">A day haunted by Bogyman</h2>
+        <p class="lede" style="margin: 0; font-size: 21px; line-height: 1.45;">The loop most people settle into once the bogyman moves in. Every step is one command; every command has <span class="mono" style="font-size: 16px;">--json</span>.</p>
+      </div>
+      <img src="bogyman.svg" alt="" style="width: 90px; height: auto; transform: scaleX(-1) rotate(-6deg);">
+    </div>
+    <ol class="flow" style="margin: 0; padding: 0; list-style: none;">
+      <li class="ink card" style="padding: 22px; display: flex; flex-direction: column; gap: 8px; transform: rotate(-.8deg);">
+        <span class="hand" style="font-size: 18px; color: #c98a0c;">01 · morning</span>
+        <b class="hand" style="font-size: 26px; font-weight: 400;">Start work however you like</b>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Three <span class="mono" style="font-size: 14px;">claude</span> tabs, two Codex sessions, one task in the Desktop Code tab. The bogyman notices each one on its first hook.</p>
+        <code class="mono snippet">claude --bg "fix flaky tests"
+codex --session-name deps-audit</code>
+      </li>
+      <li class="ink2 card" style="padding: 22px; display: flex; flex-direction: column; gap: 8px; transform: rotate(.7deg);">
+        <span class="hand" style="font-size: 18px; color: #c98a0c;">02 · glance</span>
+        <b class="hand" style="font-size: 26px; font-weight: 400;">Keep the count in your prompt</b>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Put <span class="mono" style="font-size: 14px;">bogyman status</span> in starship, tmux, or your shell prompt. Cache only, under 20 ms.</p>
+        <code class="mono snippet">bogyman status
+<span class="dot-blocked">●2</span> <span class="dot-working">▶3</span> <span class="dot-done">✓1</span></code>
+      </li>
+      <li class="ink card" style="padding: 22px; display: flex; flex-direction: column; gap: 8px; transform: rotate(-.6deg);">
+        <span class="hand" style="font-size: 18px; color: #c98a0c;">03 · triage</span>
+        <b class="hand" style="font-size: 26px; font-weight: 400;">Answer the oldest wait first</b>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;"><span class="mono" style="font-size: 14px;">bogyman waiting</span> lists blocked sessions by wait age. <span class="mono" style="font-size: 14px;">bogyman focus</span> raises the tab, attaches to a background job, or fronts Desktop.</p>
+        <code class="mono snippet">bogyman waiting
+bogyman focus flaky</code>
+      </li>
+      <li class="ink2 card" style="padding: 22px; display: flex; flex-direction: column; gap: 8px; transform: rotate(.9deg);">
+        <span class="hand" style="font-size: 18px; color: #c98a0c;">04 · unblock</span>
+        <b class="hand" style="font-size: 26px; font-weight: 400;">Reply without attaching</b>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Send a one-line answer and move on. Or let a supervising Claude session read <span class="mono" style="font-size: 14px;">bogyman ls --json</span> and do the nudging.</p>
+        <code class="mono snippet">bogyman send deps "use pnpm"
+bogyman ls --json | jq ...</code>
+      </li>
+    </ol>
+  </section>
+
+  <section id="commands" class="wrap" style="padding-top: 80px; padding-bottom: 24px; display: flex; flex-direction: column; gap: 30px; position: relative;">
+    <div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+      <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">The CLI</h2>
+      <p class="lede" style="margin: 0; font-size: 21px; line-height: 1.45;">Twelve commands. Human tables on a TTY, TSV when piped, JSON when asked. Exit codes you can branch on.</p>
+    </div>
+    <div class="cmds">
+      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman ls</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Every live session, grouped blocked / working / done. <span class="mono" style="font-size: 13px;">--watch</span> redraws each second.</p></div>
+      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman waiting</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Blocked only, oldest first. Exit 3 when empty, so it works in <span class="mono" style="font-size: 13px;">&amp;&amp;</span> chains.</p></div>
+      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman status</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">One line for prompts and status bars. Cache only, &lt;20 ms, templatable.</p></div>
+      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman focus &lt;id&gt;</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Raise the tab (iTerm2, Ghostty, WezTerm, kitty), attach a background job, or front Desktop.</p></div>
+      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman send &lt;id&gt; "…"</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Deliver a message. Wraps <span class="mono" style="font-size: 13px;">codex queue</span> and Claude's reply path.</p></div>
+      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman show &lt;id&gt;</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Full record plus the last 20 events. <span class="mono" style="font-size: 13px;">--open</span> jumps to the transcript.</p></div>
+      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman install</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Merges hooks into Claude and Codex settings. Idempotent, backed up, reversible.</p></div>
+      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman doctor</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Vendor versions, hooks registered, daemon health, last event per collector.</p></div>
+      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman daemon</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Optional poller for <span class="mono" style="font-size: 13px;">claude agents --json</span>, Codex rollouts, and notifications.</p></div>
+      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman gc</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Prune records older than <span class="mono" style="font-size: 13px;">retention_days</span> (default 7).</p></div>
+      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman uninstall</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Removes only bogyman's hook entries. Your other hooks stay untouched.</p></div>
+      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman … --json</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Stable, versioned output a script or a supervising agent can depend on.</p></div>
+    </div>
+    <div class="term ink card" style="overflow: hidden; background: #fff;">
+      <pre class="mono" style="padding: 16px 22px; font-size: 13.5px; line-height: 1.7;"><span class="prompt">$</span> bogyman ls --json | jq '.[] | select(.state=="blocked") | {name, host, waiting_for, since}'
+<span style="opacity: .6;">{ "name": "flaky-test-fix", "host": "terminal", "waiting_for": "permission_prompt", "since": "2026-10-26T21:03:11Z" }
+{ "name": "Auth module refactor", "host": "desktop", "waiting_for": "question", "since": "2026-10-26T21:08:40Z" }</span></pre>
+    </div>
+  </section>
+
+  <section id="coverage" class="wrap" style="padding-top: 80px; padding-bottom: 24px; display: flex; flex-direction: column; gap: 30px; position: relative;">
+    <div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px;">
+      <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">What bogyman can see</h2>
+      <p class="lede" style="margin: 0; font-size: 21px; line-height: 1.45;">Only what's on your disk. A bogyman that can't see under the bed stays quiet about it, so cloud sessions stay out of the list instead of showing a guess.</p>
+    </div>
+    <div class="tablebox ink card">
+      <table class="cover">
+        <thead><tr><th scope="col">Surface</th><th scope="col">State</th><th scope="col">Blocked vs done</th><th scope="col">Detail</th><th scope="col">Source</th></tr></thead>
+        <tbody>
+          <tr><td>Claude Code · terminal tab</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>turns, tokens, tasks</td><td class="mono" style="font-size: 13px;">hooks + sessions/</td></tr>
+          <tr><td>Claude Code · agent view / --bg</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>summary, PR status, model</td><td class="mono" style="font-size: 13px;">claude agents --json</td></tr>
+          <tr><td>Claude Desktop · Code tab, local</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>Desktop title, model</td><td class="mono" style="font-size: 13px;">hooks + session index</td></tr>
+          <tr><td>Claude Desktop · Code tab, SSH / WSL</td><td><span class="ink2 pill pill-partial">Partial</span></td><td>Index only</td><td>title</td><td class="mono" style="font-size: 13px;">session index</td></tr>
+          <tr><td>Codex CLI</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>cwd, last message, tokens</td><td class="mono" style="font-size: 13px;">hooks + rollouts</td></tr>
+          <tr><td>Cowork · local (opt-in)</td><td><span class="ink2 pill pill-partial">Partial</span></td><td>No</td><td>working vs idle, tokens</td><td class="mono" style="font-size: 13px;">transcript tail</td></tr>
+          <tr><td>Cloud sessions · Chat tab · Cowork cloud</td><td><span class="ink2 pill pill-none">Not shown</span></td><td>—</td><td>—</td><td class="mono" style="font-size: 13px;">not on disk</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="install" class="wrap grid2" style="padding-top: 80px; padding-bottom: 24px; align-items: start; position: relative;">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">Install in a minute</h2>
+      <div class="term ink card" style="overflow: hidden; background: #fff;">
+        <pre class="mono" style="padding: 16px 20px; font-size: 13.5px; line-height: 1.9;"><span class="prompt">$</span> brew install soleo/tap/bogyman   <span class="dim"># or: cargo install bogyman-cli</span>
+<span class="prompt">$</span> bogyman install                  <span class="dim"># wires Claude Code + Codex hooks</span>
+<span class="prompt">$</span> bogyman doctor                   <span class="dim"># both vendors report events</span></pre>
+      </div>
+      <ul style="margin: 0; padding-left: 22px; font-size: 18px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+        <li>Merges into <span class="mono" style="font-size: 14px;">~/.claude/settings.json</span> and <span class="mono" style="font-size: 14px;">~/.codex/hooks.json</span>; existing hooks untouched; a <span class="mono" style="font-size: 14px;">.bogyman-bak</span> is written first.</li>
+        <li>Nothing leaves your machine. Stores summaries and the first 200 characters of what a session is waiting on — never full prompts.</li>
+        <li>Claude Code ≥ 2.1.139 and Codex ≥ 0.130 for full coverage; degrades gracefully below.</li>
+      </ul>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">How it works</h2>
+      <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px;">
+        <li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start;"><span class="hand ink2 step-num accent">1</span><div><b class="hand" style="font-size: 24px; font-weight: 400;">Hooks push events.</b><p style="margin: 2px 0 0; font-size: 17px; line-height: 1.45;"><span class="mono" style="font-size: 14px;">bogyman hook</span> runs on <span class="mono" style="font-size: 14px;">PermissionRequest</span>, <span class="mono" style="font-size: 14px;">Notification</span>, <span class="mono" style="font-size: 14px;">Stop</span>, <span class="mono" style="font-size: 14px;">TaskCompleted</span>, <span class="mono" style="font-size: 14px;">SessionEnd</span>. Appends one row to SQLite, exits in &lt;10 ms, never returns a decision.</p></div></li>
+        <li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start;"><span class="hand ink step-num">2</span><div><b class="hand" style="font-size: 24px; font-weight: 400;">Pollers fill in detail.</b><p style="margin: 2px 0 0; font-size: 17px; line-height: 1.45;">An optional daemon reads <span class="mono" style="font-size: 14px;">claude agents --json</span>, Codex rollouts, and the Desktop session index for model, tokens, PR status, and titles.</p></div></li>
+        <li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start;"><span class="hand ink2 step-num">3</span><div><b class="hand" style="font-size: 24px; font-weight: 400;">One record per session.</b><p style="margin: 2px 0 0; font-size: 17px; line-height: 1.45;">Vendor, host, cwd, state, <span class="mono" style="font-size: 14px;">waiting_for</span>, wait age, task progress. The CLI, the JSON, and any future UI read only this.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="wrap grid2" style="padding-top: 72px; padding-bottom: 24px; align-items: start; position: relative;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">What it is not</h2>
+      <p style="margin: 0; font-size: 20px; line-height: 1.5;">Not a spawner. Not a kanban. Not a tmux layout. Not a cost dashboard. Those exist, a hundred times over. Bogyman is the thin layer that lurks <span class="hand hl" style="font-size: 1.2em;">alongside</span> whatever you already use and answers one question well.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">Roadmap</h2>
+      <table class="road" style="width: 100%; border-collapse: collapse; font-size: 17px;">
+        <tr><td class="hand" style="font-size: 22px; width: 64px;">v0.1</td><td>Hook collectors; <span class="mono" style="font-size: 13px;">ls</span> / <span class="mono" style="font-size: 13px;">waiting</span> / <span class="mono" style="font-size: 13px;">status</span> / <span class="mono" style="font-size: 13px;">install</span> / <span class="mono" style="font-size: 13px;">doctor</span></td><td class="hand" style="text-align: right; font-size: 20px;"><span class="ink2 pill accent">building</span></td></tr>
+        <tr><td class="hand" style="font-size: 22px;">v0.2</td><td>Pollers, Desktop index, <span class="mono" style="font-size: 13px;">focus</span>, daemon, notifications</td><td class="hand" style="text-align: right; font-size: 20px;">next</td></tr>
+        <tr><td class="hand" style="font-size: 22px;">v0.3</td><td><span class="mono" style="font-size: 13px;">send</span>, <span class="mono" style="font-size: 13px;">show</span>, <span class="mono" style="font-size: 13px;">--watch</span>, Homebrew tap, public release</td><td class="hand" style="text-align: right; font-size: 20px;">planned</td></tr>
+        <tr><td class="hand" style="font-size: 22px;">v1+</td><td>Web view on the same store, Gemini / OpenCode collectors, cloud sessions, team mode</td><td class="hand" style="text-align: right; font-size: 20px;">later</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-top: 90px; padding-bottom: 48px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; position: relative;">
+    <img src="bogyman.svg" alt="" style="width: 120px; height: auto; transform: rotate(4deg);">
+    <h2 class="hand" style="margin: 0; font-size: 60px; line-height: 1; font-weight: 400;">Let something else do the haunting.</h2>
+    <p class="lede" style="margin: 0; font-size: 21px; max-width: 600px; line-height: 1.45;">Bogyman is being built in the open. Star the repo to follow, or leave an email and the bogyman will find you when v0.1 ships.</p>
+    <div class="cta-row" style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+      <a href="https://github.com/soleo" class="mono ink card accent" style="display: inline-block; padding: 12px 20px; font-weight: 600; font-size: 15px;">Follow on GitHub</a>
+      <a href="https://xinjiangshao.com" class="hand ink2 card" style="display: inline-block; padding: 10px 20px; font-size: 22px; background: #fff;">About the author</a>
+    </div>
+    <form id="notes" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 8px; position: relative;">
+      <label for="email" class="sr-only">Email for release notes</label>
+      <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" class="ink" style="padding: 10px 14px; background: #fff; font-family: 'Patrick Hand', cursive; font-size: 18px; min-width: 260px; color: #141413;">
+      <button type="submit" class="hand ink2 card" style="padding: 8px 18px; background: #fff; font-size: 20px; cursor: pointer; color: #141413;">Get release notes</button>
+      <p id="notes-msg" class="hand" aria-live="polite" style="width: 100%; margin: 6px 0 0; font-size: 18px; min-height: 1.4em;"></p>
+    </form>
+  </section>
+  </main>
+
+  <footer class="wrap" style="padding-top: 24px; padding-bottom: 48px; border-top: 2.5px dashed #141413; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 16px; position: relative;">
+    <span class="hand" style="font-size: 20px;">bogyman · MIT · built in Chicago · boo.</span>
+    <span>Claude Code, Claude Desktop and Codex are trademarks of their owners. Bogyman is an independent project.</span>
+  </footer>
+</div>
+<script src="main.js"></script>
+</body>
+</html>

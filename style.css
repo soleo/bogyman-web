@@ -1,0 +1,99 @@
+:root {
+  --ink: #141413;
+  --paper: #fbf7ee;
+  --accent: #f2b63c;
+  --accent-ink: #c98a0c;
+  --blue: #2f8fb5;
+  --green: #2e9e5b;
+  --coral: #e5705b;
+  --mint: #c9f0d6;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--ink); text-decoration: none; }
+a:hover { color: var(--accent-ink); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+img { max-width: 100%; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+.hand { font-family: 'Gochi Hand', 'Patrick Hand', cursive; }
+.mono { font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace; }
+.ink { border: 2.5px solid var(--ink); border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px; }
+.ink2 { border: 2.5px solid var(--ink); border-radius: 18px 225px 18px 255px / 255px 18px 225px 18px; }
+.card { background: #fff; box-shadow: 5px 5px 0 var(--ink); }
+.accent { background: var(--accent); }
+.hl { background: linear-gradient(transparent 55%, var(--accent) 55%, var(--accent) 92%, transparent 92%); }
+
+.grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+.cmds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+
+.cover { width: 100%; border-collapse: collapse; }
+.cover th, .cover td { padding: 12px 14px; border-top: 2px dashed var(--ink); text-align: left; font-size: 17px; }
+.cover th { font-family: 'Gochi Hand', cursive; font-size: 20px; border-top: 0; }
+.tablebox { padding: 8px 12px; background: #fff; }
+
+.term pre { margin: 0; white-space: pre; overflow-x: auto; }
+.term .prompt { color: var(--accent-ink); font-weight: 600; }
+.term .dim { opacity: .55; }
+.term .wait { font-weight: 600; background: var(--accent); }
+.dot-blocked { color: var(--accent-ink); }
+.dot-working { color: var(--blue); }
+.dot-done { color: var(--green); }
+
+.nav a { font-size: 20px; }
+.tilt-l { transform: rotate(-1.2deg); }
+.tilt-r { transform: rotate(1deg); }
+
+.snippet {
+  font-size: 12.5px; white-space: pre-line; background: var(--paper);
+  padding: 8px 10px; border: 2px dashed var(--ink);
+}
+.cmd { font-weight: 600; font-size: 16px; background: var(--accent); padding: 2px 6px; }
+.pill { padding: 1px 10px; }
+.pill-full { background: var(--mint); }
+.pill-partial { background: var(--accent); }
+.pill-none { background: #eee; }
+
+.step-num {
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+  font-size: 24px; background: #fff;
+}
+.road td { padding: 10px 8px; border-top: 2px dashed var(--ink); }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 900px) {
+  .wrap { padding: 0 16px; }
+  body { font-size: 17px; }
+  .nav { gap: 14px; }
+  .nav a:not(.ink) { display: none; }
+  .hero { flex-direction: column !important; gap: 14px !important; padding-top: 20px !important; }
+  .hero-art { order: -1; align-self: center; }
+  .hero-h1 { font-size: 54px !important; }
+  .hero p { font-size: 19px !important; }
+  .hero-ctas { flex-direction: column; }
+  .hero-ctas a { display: block !important; text-align: center; }
+  .logo-big { width: 170px !important; }
+  .term pre { font-size: 12px !important; padding: 12px 14px !important; }
+  .stats { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px !important; }
+  .stats > div { font-size: 16px !important; padding: 10px 14px !important; }
+  .stats b { font-size: 26px !important; }
+  .grid4, .cmds, .flow, .grid2 { grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 14px; }
+  h2.hand { font-size: 40px !important; }
+  .lede { font-size: 19px !important; }
+  .tablebox { overflow-x: auto; }
+  .cover th, .cover td { font-size: 16px; white-space: nowrap; }
+  .cta-row a { display: block !important; width: 100%; box-sizing: border-box; text-align: center; }
+  .cta-row { width: 100%; }
+  section { padding-top: 40px !important; }
+}
