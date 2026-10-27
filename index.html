@@ -30,7 +30,7 @@
       <a href="#commands">Commands</a>
       <a href="#coverage">What it sees</a>
       <a href="#install">Install</a>
-      <a href="https://github.com/soleo" class="ink" style="padding: 6px 16px; background: #fff; box-shadow: 3px 3px 0 #141413;">GitHub</a>
+      <a href="https://github.com/soleo/bogyman-cli" class="ink" style="padding: 6px 16px; background: #fff; box-shadow: 3px 3px 0 #141413;">GitHub</a>
     </nav>
   </header>
 
@@ -41,7 +41,7 @@
       <h1 class="hand hero-h1" style="margin: 0; font-size: 84px; line-height: .95; font-weight: 400;">Your agents haunt you.<br>Haunt them <span class="hl">back.</span></h1>
       <p style="margin: 0; max-width: 620px; font-size: 22px; line-height: 1.45;">Six Claude Code and Codex sessions, and every one of them wants something from you: a permission, an answer, a nudge. <strong class="mono" style="font-size: 18px;">bogyman</strong> is the thing under your desk that knows which agent has been waiting longest, what it's stuck on, and chases <em>you</em> down to deal with it. It never touches your terminals, tmux, or worktrees. It just stares.</p>
       <div class="hero-ctas" style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px;">
-        <a href="#install" class="mono ink card accent" style="display: inline-block; padding: 12px 20px; font-weight: 600; font-size: 15px;">brew install bogyman</a>
+        <a href="#install" class="mono ink card accent" style="display: inline-block; padding: 12px 20px; font-weight: 600; font-size: 15px;">install in one line</a>
         <a href="#day" class="hand ink2 card" style="display: inline-block; padding: 10px 20px; font-size: 22px;">See a haunted day →</a>
       </div>
     </div>
@@ -199,9 +199,15 @@ bogyman ls --json | jq ...</code>
   <section id="install" class="wrap grid2" style="padding-top: 80px; padding-bottom: 24px; align-items: start; position: relative;">
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">Install in a minute</h2>
+      <div class="term ink card oneliner" style="overflow: hidden; background: #fff;">
+        <div class="oneliner-row">
+          <pre class="mono" id="install-cmd" style="padding: 14px 16px; font-size: 13.5px; line-height: 1.6; flex: 1 1 auto; min-width: 0;">curl -fsSL https://raw.githubusercontent.com/soleo/bogyman-cli/main/install.sh | sh</pre>
+          <button type="button" class="hand ink2 copy-btn" data-copy="install-cmd" aria-label="Copy the install command">Copy</button>
+        </div>
+      </div>
+      <p style="margin: -4px 0 0; font-size: 16px; line-height: 1.45;">One line, no package manager. Verifies the download against the release checksums and installs to <span class="mono" style="font-size: 13px;">~/.local/bin</span>. Or <span class="mono" style="font-size: 13px;">cargo install --git https://github.com/soleo/bogyman-cli bogyman-cli</span>.</p>
       <div class="term ink card" style="overflow: hidden; background: #fff;">
-        <pre class="mono" style="padding: 16px 20px; font-size: 13.5px; line-height: 1.9;"><span class="prompt">$</span> brew install soleo/tap/bogyman   <span class="dim"># or: cargo install bogyman-cli</span>
-<span class="prompt">$</span> bogyman install                  <span class="dim"># wires Claude Code + Codex hooks</span>
+        <pre class="mono" style="padding: 16px 20px; font-size: 13.5px; line-height: 1.9;"><span class="prompt">$</span> bogyman install                  <span class="dim"># wires Claude Code + Codex hooks</span>
 <span class="prompt">$</span> bogyman doctor                   <span class="dim"># both vendors report events</span></pre>
       </div>
       <ul style="margin: 0; padding-left: 22px; font-size: 18px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
@@ -241,7 +247,7 @@ bogyman ls --json | jq ...</code>
     <h2 class="hand" style="margin: 0; font-size: 60px; line-height: 1; font-weight: 400;">Let something else do the haunting.</h2>
     <p class="lede" style="margin: 0; font-size: 21px; max-width: 600px; line-height: 1.45;">Bogyman is being built in the open. Star the repo to follow, or leave an email and the bogyman will find you when v0.1 ships.</p>
     <div class="cta-row" style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
-      <a href="https://github.com/soleo" class="mono ink card accent" style="display: inline-block; padding: 12px 20px; font-weight: 600; font-size: 15px;">Follow on GitHub</a>
+      <a href="https://github.com/soleo/bogyman-cli" class="mono ink card accent" style="display: inline-block; padding: 12px 20px; font-weight: 600; font-size: 15px;">Follow on GitHub</a>
       <a href="https://xinjiangshao.com" class="hand ink2 card" style="display: inline-block; padding: 10px 20px; font-size: 22px; background: #fff;">About the author</a>
     </div>
     <form id="notes" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 8px; position: relative;">
