@@ -87,7 +87,8 @@ img { max-width: 100%; }
   .nav { gap: 14px; }
   .nav a:not(.ink) { display: none; }
   .hero { flex-direction: column !important; gap: 14px !important; padding-top: 20px !important; }
-  .hero-art { order: -1; align-self: center; }
+  .hero-art { order: -1; align-self: center; margin-top: 28px; }
+  .hero-art .tag { top: -26px !important; right: -44px !important; }
   .hero-h1 { font-size: 54px !important; }
   .hero p { font-size: 19px !important; }
   .hero-ctas { flex-direction: column; }
