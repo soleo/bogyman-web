@@ -144,7 +144,7 @@ bogyman focus flaky</code>
         <b class="hand" style="font-size: 26px; font-weight: 400;">Reply without attaching</b>
         <p style="margin: 0; font-size: 17px; line-height: 1.45;">Send a one-line answer and move on. Or let a supervising Claude session read <span class="mono" style="font-size: 14px;">bogyman ls --json</span> and do the nudging.</p>
         <code class="mono snippet">bogyman send deps "use pnpm"
-bogyman ls --json | jq ...</code>
+bogyman ls --json | jq '.data.sessions'</code>
       </li>
     </ol>
   </section>
@@ -166,12 +166,14 @@ bogyman ls --json | jq ...</code>
       <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman daemon</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Optional poller for <span class="mono" style="font-size: 13px;">claude agents --json</span>, Codex rollouts, and notifications.</p></div>
       <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman gc</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Prune records older than <span class="mono" style="font-size: 13px;">retention_days</span> (default 7).</p></div>
       <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman uninstall</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Removes only bogyman's hook entries. Your other hooks stay untouched.</p></div>
-      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman … --json</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Stable, versioned output a script or a supervising agent can depend on.</p></div>
+      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman … --json</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">One envelope for every command: <span class="mono" style="font-size: 13px;">schema</span>, <span class="mono" style="font-size: 13px;">command</span>, <span class="mono" style="font-size: 13px;">ok</span>, then <span class="mono" style="font-size: 13px;">data</span> or <span class="mono" style="font-size: 13px;">error</span>. Failures are JSON too.</p></div>
     </div>
     <div class="term ink card" style="overflow: hidden; background: #fff;">
-      <pre class="mono" style="padding: 16px 22px; font-size: 13.5px; line-height: 1.7;"><span class="prompt">$</span> bogyman ls --json | jq '.[] | select(.state=="blocked") | {name, host, waiting_for, since}'
+      <pre class="mono" style="padding: 16px 22px; font-size: 13.5px; line-height: 1.7;"><span class="prompt">$</span> bogyman ls --json | jq '.data.sessions[] | select(.state=="blocked") | {name, host, waiting_for, since}'
 <span style="opacity: .6;">{ "name": "flaky-test-fix", "host": "terminal", "waiting_for": "permission_prompt", "since": "2026-10-26T21:03:11Z" }
-{ "name": "Auth module refactor", "host": "desktop", "waiting_for": "question", "since": "2026-10-26T21:08:40Z" }</span></pre>
+{ "name": "Auth module refactor", "host": "desktop", "waiting_for": "question", "since": "2026-10-26T21:08:40Z" }</span>
+<span class="prompt">$</span> bogyman show zzz --json
+<span style="opacity: .6;">{"schema":1,"command":"show","ok":false,"error":{"message":"no session matches 'zzz'","exit":1}}</span></pre>
     </div>
   </section>
 
