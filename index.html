@@ -66,7 +66,7 @@
 <span class="dot-blocked">●</span> codex    terminal   deps-audit            sandbox · registry.npm    41s      hapio
 
 <span class="prompt">$</span> bogyman focus flaky
-<span class="dim">→ raising iTerm2 tab ttys004. boo.</span>
+<span class="dim">cc-1f0e2c9a (flaky-test-fix): raised the Ghostty tab on /dev/ttys004</span>
 
 <span class="prompt">$</span> bogyman status
 <span class="dot-blocked">●3</span> <span class="dot-working">▶2</span> <span class="dot-done">✓1</span></pre>
@@ -99,12 +99,12 @@
       <div class="ink card tilt-l" style="padding: 22px; display: flex; flex-direction: column; gap: 8px;">
         <span class="hand" aria-hidden="true" style="font-size: 40px; line-height: 1; color: #2e9e5b;">$$</span>
         <h3 class="hand" style="margin: 0; font-size: 28px; font-weight: 400;">Cost &amp; quota</h3>
-        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Tokens per session and in total, model in use, and PR status pulled from the vendor's own feed. No scraping, no guessing.</p>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">The model each session runs, token totals and the last reply for Codex, read from the vendors' own files and CLIs. No scraping, no guessing.</p>
       </div>
       <div class="ink2 card tilt-r" style="padding: 22px; display: flex; flex-direction: column; gap: 8px;">
         <span class="hand" aria-hidden="true" style="font-size: 40px; line-height: 1; color: #e5705b;">→</span>
         <h3 class="hand" style="margin: 0; font-size: 28px; font-weight: 400;">Control</h3>
-        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Send a message, focus, attach, or stop — wrapping <span class="mono" style="font-size: 14px;">codex queue</span> and <span class="mono" style="font-size: 14px;">claude attach</span> so you never leave the terminal you're in.</p>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Send a message, raise the right tab, attach to a background job, or resume one that ended — wrapping <span class="mono" style="font-size: 14px;">codex queue</span> and <span class="mono" style="font-size: 14px;">claude attach</span> so you never hunt for a window.</p>
       </div>
     </div>
   </section>
@@ -128,14 +128,15 @@ codex --session-name deps-audit</code>
       <li class="ink2 card" style="padding: 22px; display: flex; flex-direction: column; gap: 8px; transform: rotate(.7deg);">
         <span class="hand" style="font-size: 18px; color: #c98a0c;">02 · glance</span>
         <b class="hand" style="font-size: 26px; font-weight: 400;">Keep the count in your prompt</b>
-        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Put <span class="mono" style="font-size: 14px;">bogyman status</span> in starship, tmux, or your shell prompt. Cache only, under 20 ms.</p>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;">Put <span class="mono" style="font-size: 14px;">bogyman status</span> in starship, tmux, or your shell prompt. Cache only, under 20 ms. Or start the daemon and get a notification the moment a session blocks.</p>
         <code class="mono snippet">bogyman status
-<span class="dot-blocked">●2</span> <span class="dot-working">▶3</span> <span class="dot-done">✓1</span></code>
+<span class="dot-blocked">●2</span> <span class="dot-working">▶3</span> <span class="dot-done">✓1</span>
+bogyman daemon start</code>
       </li>
       <li class="ink card" style="padding: 22px; display: flex; flex-direction: column; gap: 8px; transform: rotate(-.6deg);">
         <span class="hand" style="font-size: 18px; color: #c98a0c;">03 · triage</span>
         <b class="hand" style="font-size: 26px; font-weight: 400;">Answer the oldest wait first</b>
-        <p style="margin: 0; font-size: 17px; line-height: 1.45;"><span class="mono" style="font-size: 14px;">bogyman waiting</span> lists blocked sessions by wait age. <span class="mono" style="font-size: 14px;">bogyman focus</span> raises the tab, attaches to a background job, or fronts Desktop.</p>
+        <p style="margin: 0; font-size: 17px; line-height: 1.45;"><span class="mono" style="font-size: 14px;">bogyman waiting</span> lists blocked sessions by wait age. <span class="mono" style="font-size: 14px;">bogyman focus</span> raises the tab, attaches to a background job, fronts Desktop, or resumes a session that ended.</p>
         <code class="mono snippet">bogyman waiting
 bogyman focus flaky</code>
       </li>
@@ -155,15 +156,15 @@ bogyman ls --json | jq '.data.sessions'</code>
       <p class="lede" style="margin: 0; font-size: 21px; line-height: 1.45;">Twelve commands. Human tables on a TTY, TSV when piped, JSON when asked. Exit codes you can branch on.</p>
     </div>
     <div class="cmds">
-      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman ls</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Every live session, grouped blocked / working / done. <span class="mono" style="font-size: 13px;">--watch</span> redraws each second.</p></div>
+      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman ls</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Every live session, grouped blocked / working / done. <span class="mono" style="font-size: 13px;">--watch</span> redraws each second and polls <span class="mono" style="font-size: 13px;">claude agents</span> too.</p></div>
       <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman waiting</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Blocked only, oldest first. Exit 3 when empty, so it works in <span class="mono" style="font-size: 13px;">&amp;&amp;</span> chains.</p></div>
       <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman status</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">One line for prompts and status bars. Cache only, &lt;20 ms, templatable.</p></div>
-      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman focus &lt;id&gt;</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Raise the tab (iTerm2, Ghostty, WezTerm, kitty), attach a background job, or front Desktop.</p></div>
+      <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman focus &lt;id&gt;</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Raise the tab (Ghostty, iTerm2, Terminal, WezTerm, kitty, tmux), attach a background job, front Desktop, or resume one that ended.</p></div>
       <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman send &lt;id&gt; "…"</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Deliver a message. Wraps <span class="mono" style="font-size: 13px;">codex queue</span> and Claude's reply path.</p></div>
       <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman show &lt;id&gt;</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Full record plus the last 20 events. <span class="mono" style="font-size: 13px;">--open</span> jumps to the transcript.</p></div>
       <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman install</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Merges hooks into Claude and Codex settings. Idempotent, backed up, reversible.</p></div>
       <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman doctor</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Vendor versions, hooks registered, daemon health, last event per collector.</p></div>
-      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman daemon</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Optional poller for <span class="mono" style="font-size: 13px;">claude agents --json</span>, Codex rollouts, and notifications.</p></div>
+      <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman daemon</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Optional poller for <span class="mono" style="font-size: 13px;">claude agents --json</span> and Codex rollouts, plus notifications. <span class="mono" style="font-size: 13px;">install</span> runs it at login via launchd or systemd.</p></div>
       <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman gc</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Prune records older than <span class="mono" style="font-size: 13px;">retention_days</span> (default 7).</p></div>
       <div class="ink card" style="padding: 16px 18px;"><code class="mono cmd">bogyman uninstall</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">Removes only bogyman's hook entries. Your other hooks stay untouched.</p></div>
       <div class="ink2 card" style="padding: 16px 18px;"><code class="mono cmd">bogyman … --json</code><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.4;">One envelope for every command: <span class="mono" style="font-size: 13px;">schema</span>, <span class="mono" style="font-size: 13px;">command</span>, <span class="mono" style="font-size: 13px;">ok</span>, then <span class="mono" style="font-size: 13px;">data</span> or <span class="mono" style="font-size: 13px;">error</span>. Failures are JSON too.</p></div>
@@ -186,11 +187,11 @@ bogyman ls --json | jq '.data.sessions'</code>
       <table class="cover">
         <thead><tr><th scope="col">Surface</th><th scope="col">State</th><th scope="col">Blocked vs done</th><th scope="col">Detail</th><th scope="col">Source</th></tr></thead>
         <tbody>
-          <tr><td>Claude Code · terminal tab</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>turns, tokens, tasks</td><td class="mono" style="font-size: 13px;">hooks + sessions/</td></tr>
-          <tr><td>Claude Code · agent view / --bg</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>summary, PR status, model</td><td class="mono" style="font-size: 13px;">claude agents --json</td></tr>
+          <tr><td>Claude Code · terminal tab</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>turns, tasks, model</td><td class="mono" style="font-size: 13px;">hooks + sessions/</td></tr>
+          <tr><td>Claude Code · agent view / --bg</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>exact wait reason, attach id</td><td class="mono" style="font-size: 13px;">claude agents --json</td></tr>
           <tr><td>Claude Desktop · Code tab, local</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>Desktop title, model</td><td class="mono" style="font-size: 13px;">hooks + session index</td></tr>
           <tr><td>Claude Desktop · Code tab, SSH / WSL</td><td><span class="ink2 pill pill-partial">Partial</span></td><td>Index only</td><td>title</td><td class="mono" style="font-size: 13px;">session index</td></tr>
-          <tr><td>Codex CLI</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>cwd, last message, tokens</td><td class="mono" style="font-size: 13px;">hooks + rollouts</td></tr>
+          <tr><td>Codex CLI</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>model, tokens, last message, name</td><td class="mono" style="font-size: 13px;">hooks + rollouts</td></tr>
           <tr><td>Cowork · local (opt-in)</td><td><span class="ink2 pill pill-partial">Partial</span></td><td>No</td><td>working vs idle, tokens</td><td class="mono" style="font-size: 13px;">transcript tail</td></tr>
           <tr><td>Cloud sessions · Chat tab · Cowork cloud</td><td><span class="ink2 pill pill-none">Not shown</span></td><td>—</td><td>—</td><td class="mono" style="font-size: 13px;">not on disk</td></tr>
         </tbody>
@@ -210,7 +211,8 @@ bogyman ls --json | jq '.data.sessions'</code>
       <p style="margin: -4px 0 0; font-size: 16px; line-height: 1.45;">One line, no package manager. Verifies the download against the release checksums and installs to <span class="mono" style="font-size: 13px;">~/.local/bin</span>. Or <span class="mono" style="font-size: 13px;">cargo install --git https://github.com/soleo/bogyman-cli bogyman-cli</span>.</p>
       <div class="term ink card" style="overflow: hidden; background: #fff;">
         <pre class="mono" style="padding: 16px 20px; font-size: 13.5px; line-height: 1.9;"><span class="prompt">$</span> bogyman install                  <span class="dim"># wires Claude Code + Codex hooks</span>
-<span class="prompt">$</span> bogyman doctor                   <span class="dim"># both vendors report events</span></pre>
+<span class="prompt">$</span> bogyman doctor                   <span class="dim"># both vendors report events</span>
+<span class="prompt">$</span> bogyman daemon install           <span class="dim"># optional: background polls + notifications</span></pre>
       </div>
       <ul style="margin: 0; padding-left: 22px; font-size: 18px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
         <li>Merges into <span class="mono" style="font-size: 14px;">~/.claude/settings.json</span> and <span class="mono" style="font-size: 14px;">~/.codex/hooks.json</span>; existing hooks untouched; a <span class="mono" style="font-size: 14px;">.bogyman-bak</span> is written first.</li>
@@ -222,7 +224,7 @@ bogyman ls --json | jq '.data.sessions'</code>
       <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">How it works</h2>
       <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px;">
         <li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start;"><span class="hand ink2 step-num accent">1</span><div><b class="hand" style="font-size: 24px; font-weight: 400;">Hooks push events.</b><p style="margin: 2px 0 0; font-size: 17px; line-height: 1.45;"><span class="mono" style="font-size: 14px;">bogyman hook</span> runs on <span class="mono" style="font-size: 14px;">PermissionRequest</span>, <span class="mono" style="font-size: 14px;">Notification</span>, <span class="mono" style="font-size: 14px;">Stop</span>, <span class="mono" style="font-size: 14px;">TaskCompleted</span>, <span class="mono" style="font-size: 14px;">SessionEnd</span>. Appends one row to SQLite, exits in &lt;10 ms, never returns a decision.</p></div></li>
-        <li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start;"><span class="hand ink step-num">2</span><div><b class="hand" style="font-size: 24px; font-weight: 400;">Pollers fill in detail.</b><p style="margin: 2px 0 0; font-size: 17px; line-height: 1.45;">An optional daemon reads <span class="mono" style="font-size: 14px;">claude agents --json</span>, Codex rollouts, and the Desktop session index for model, tokens, PR status, and titles.</p></div></li>
+        <li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start;"><span class="hand ink step-num">2</span><div><b class="hand" style="font-size: 24px; font-weight: 400;">Pollers fill in detail.</b><p style="margin: 2px 0 0; font-size: 17px; line-height: 1.45;">Every query tails Codex rollouts for model, tokens and the last reply. The optional daemon also polls <span class="mono" style="font-size: 14px;">claude agents --json</span> for background sessions and exact wait reasons, and sends the notifications.</p></div></li>
         <li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start;"><span class="hand ink2 step-num">3</span><div><b class="hand" style="font-size: 24px; font-weight: 400;">One record per session.</b><p style="margin: 2px 0 0; font-size: 17px; line-height: 1.45;">Vendor, host, cwd, state, <span class="mono" style="font-size: 14px;">waiting_for</span>, wait age, task progress. The CLI, the JSON, and any future UI read only this.</p></div></li>
       </ol>
     </div>
@@ -236,9 +238,9 @@ bogyman ls --json | jq '.data.sessions'</code>
     <div style="display: flex; flex-direction: column; gap: 12px;">
       <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">Roadmap</h2>
       <table class="road" style="width: 100%; border-collapse: collapse; font-size: 17px;">
-        <tr><td class="hand" style="font-size: 22px; width: 64px;">v0.1</td><td>Hook collectors; <span class="mono" style="font-size: 13px;">ls</span> / <span class="mono" style="font-size: 13px;">waiting</span> / <span class="mono" style="font-size: 13px;">status</span> / <span class="mono" style="font-size: 13px;">install</span> / <span class="mono" style="font-size: 13px;">doctor</span></td><td class="hand" style="text-align: right; font-size: 20px;"><span class="ink2 pill accent">building</span></td></tr>
-        <tr><td class="hand" style="font-size: 22px;">v0.2</td><td>Pollers, Desktop index, <span class="mono" style="font-size: 13px;">focus</span>, daemon, notifications</td><td class="hand" style="text-align: right; font-size: 20px;">next</td></tr>
-        <tr><td class="hand" style="font-size: 22px;">v0.3</td><td><span class="mono" style="font-size: 13px;">send</span>, <span class="mono" style="font-size: 13px;">show</span>, <span class="mono" style="font-size: 13px;">--watch</span>, Homebrew tap, public release</td><td class="hand" style="text-align: right; font-size: 20px;">planned</td></tr>
+        <tr><td class="hand" style="font-size: 22px; width: 64px;">v0.1</td><td>Hook collectors; <span class="mono" style="font-size: 13px;">ls</span> / <span class="mono" style="font-size: 13px;">waiting</span> / <span class="mono" style="font-size: 13px;">status</span> / <span class="mono" style="font-size: 13px;">show</span> / <span class="mono" style="font-size: 13px;">send</span> / <span class="mono" style="font-size: 13px;">--watch</span> / <span class="mono" style="font-size: 13px;">--json</span></td><td class="hand" style="text-align: right; font-size: 20px;">shipped</td></tr>
+        <tr><td class="hand" style="font-size: 22px;">v0.2</td><td><span class="mono" style="font-size: 13px;">claude agents</span> + Codex rollout pollers, <span class="mono" style="font-size: 13px;">focus</span>, daemon, notifications</td><td class="hand" style="text-align: right; font-size: 20px;"><span class="ink2 pill accent">releasing</span></td></tr>
+        <tr><td class="hand" style="font-size: 22px;">v0.3</td><td>Desktop session index, local Cowork, Homebrew tap</td><td class="hand" style="text-align: right; font-size: 20px;">planned</td></tr>
         <tr><td class="hand" style="font-size: 22px;">v1+</td><td>Web view on the same store, Gemini / OpenCode collectors, cloud sessions, team mode</td><td class="hand" style="text-align: right; font-size: 20px;">later</td></tr>
       </table>
     </div>
@@ -247,7 +249,7 @@ bogyman ls --json | jq '.data.sessions'</code>
   <section class="wrap" style="padding-top: 90px; padding-bottom: 48px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; position: relative;">
     <img src="bogyman.svg" alt="" style="width: 120px; height: auto; transform: rotate(4deg);">
     <h2 class="hand" style="margin: 0; font-size: 60px; line-height: 1; font-weight: 400;">Let something else do the haunting.</h2>
-    <p class="lede" style="margin: 0; font-size: 21px; max-width: 600px; line-height: 1.45;">Bogyman is being built in the open. Star the repo to follow, or leave an email and the bogyman will find you when v0.1 ships.</p>
+    <p class="lede" style="margin: 0; font-size: 21px; max-width: 600px; line-height: 1.45;">Bogyman is being built in the open. Star the repo to follow, or leave an email and the bogyman will find you when the next release ships.</p>
     <div class="cta-row" style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
       <a href="https://github.com/soleo/bogyman-cli" class="mono ink card accent" style="display: inline-block; padding: 12px 20px; font-weight: 600; font-size: 15px;">Follow on GitHub</a>
       <a href="https://xinjiangshao.com" class="hand ink2 card" style="display: inline-block; padding: 10px 20px; font-size: 22px; background: #fff;">About the author</a>
