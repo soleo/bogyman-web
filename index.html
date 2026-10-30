@@ -189,10 +189,10 @@ bogyman ls --json | jq '.data.sessions'</code>
         <tbody>
           <tr><td>Claude Code · terminal tab</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>turns, tasks, model</td><td class="mono" style="font-size: 13px;">hooks + sessions/</td></tr>
           <tr><td>Claude Code · agent view / --bg</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>exact wait reason, attach id</td><td class="mono" style="font-size: 13px;">claude agents --json</td></tr>
-          <tr><td>Claude Desktop · Code tab, local</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>model</td><td class="mono" style="font-size: 13px;">hooks</td></tr>
-          <tr><td>Claude Desktop · Code tab, SSH / WSL</td><td><span class="ink2 pill pill-none">Planned</span></td><td>Index only</td><td>title</td><td class="mono" style="font-size: 13px;">session index · v0.3</td></tr>
+          <tr><td>Claude Desktop · Code tab, local</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>model, Desktop's turn summary</td><td class="mono" style="font-size: 13px;">hooks + session index</td></tr>
+          <tr><td>Claude Desktop · Code tab, SSH / WSL</td><td><span class="ink2 pill pill-none">Planned</span></td><td>Index only</td><td>title</td><td class="mono" style="font-size: 13px;">session index</td></tr>
           <tr><td>Codex CLI</td><td><span class="ink2 pill pill-full">Full</span></td><td>Correct</td><td>model, tokens, last message, name</td><td class="mono" style="font-size: 13px;">hooks + rollouts</td></tr>
-          <tr><td>Cowork · local (opt-in)</td><td><span class="ink2 pill pill-none">Planned</span></td><td>No</td><td>working vs idle, tokens</td><td class="mono" style="font-size: 13px;">transcript tail · v0.3</td></tr>
+          <tr><td>Cowork · local</td><td><span class="ink2 pill pill-none">Not shown</span></td><td>—</td><td>—</td><td class="mono" style="font-size: 13px;">inside Cowork's VM</td></tr>
           <tr><td>Cloud sessions · Chat tab · Cowork cloud</td><td><span class="ink2 pill pill-none">Not shown</span></td><td>—</td><td>—</td><td class="mono" style="font-size: 13px;">not on disk</td></tr>
         </tbody>
       </table>
@@ -208,11 +208,11 @@ bogyman ls --json | jq '.data.sessions'</code>
           <button type="button" class="hand ink2 copy-btn" data-copy="install-cmd" aria-label="Copy the install command">Copy</button>
         </div>
       </div>
-      <p style="margin: -4px 0 0; font-size: 16px; line-height: 1.45;">One line, no package manager. Verifies the download against the release checksums and installs to <span class="mono" style="font-size: 13px;">~/.local/bin</span>. Or <span class="mono" style="font-size: 13px;">cargo install --git https://github.com/soleo/bogyman-cli bogyman-cli</span>.</p>
+      <p style="margin: -4px 0 0; font-size: 16px; line-height: 1.45;">One line, no package manager. Verifies the download against the release checksums and installs to <span class="mono" style="font-size: 13px;">~/.local/bin</span>. Or <span class="mono" style="font-size: 13px;">brew install soleo/bogyman/bogyman</span>, or <span class="mono" style="font-size: 13px;">cargo install --git https://github.com/soleo/bogyman-cli bogyman-cli</span>.</p>
       <div class="term ink card" style="overflow: hidden; background: #fff;">
-        <pre class="mono" style="padding: 16px 20px; font-size: 13.5px; line-height: 1.9;"><span class="prompt">$</span> bogyman install                  <span class="dim"># wires Claude Code + Codex hooks</span>
-<span class="prompt">$</span> bogyman doctor                   <span class="dim"># both vendors report events</span>
-<span class="prompt">$</span> bogyman daemon install           <span class="dim"># optional: background polls + notifications</span></pre>
+        <pre class="mono" style="padding: 16px 20px; font-size: 13.5px; line-height: 1.9;"><span class="prompt">$</span> bogyman install         <span class="dim"># wires Claude + Codex hooks</span>
+<span class="prompt">$</span> bogyman doctor          <span class="dim"># both vendors report events</span>
+<span class="prompt">$</span> bogyman daemon install  <span class="dim"># optional: notifications</span></pre>
       </div>
       <ul style="margin: 0; padding-left: 22px; font-size: 18px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
         <li>Merges into <span class="mono" style="font-size: 14px;">~/.claude/settings.json</span> and <span class="mono" style="font-size: 14px;">~/.codex/hooks.json</span>; existing hooks untouched; a <span class="mono" style="font-size: 14px;">.bogyman-bak</span> is written first.</li>
@@ -239,8 +239,8 @@ bogyman ls --json | jq '.data.sessions'</code>
       <h2 class="hand" style="margin: 0; font-size: 52px; line-height: 1.05; font-weight: 400;">Roadmap</h2>
       <table class="road" style="width: 100%; border-collapse: collapse; font-size: 17px;">
         <tr><td class="hand" style="font-size: 22px; width: 64px;">v0.1</td><td>Hook collectors; <span class="mono" style="font-size: 13px;">ls</span> / <span class="mono" style="font-size: 13px;">waiting</span> / <span class="mono" style="font-size: 13px;">status</span> / <span class="mono" style="font-size: 13px;">show</span> / <span class="mono" style="font-size: 13px;">send</span> / <span class="mono" style="font-size: 13px;">--watch</span> / <span class="mono" style="font-size: 13px;">--json</span></td><td class="hand" style="text-align: right; font-size: 20px;">shipped</td></tr>
-        <tr><td class="hand" style="font-size: 22px;">v0.2</td><td><span class="mono" style="font-size: 13px;">claude agents</span> + Codex rollout pollers, <span class="mono" style="font-size: 13px;">focus</span>, daemon, notifications</td><td class="hand" style="text-align: right; font-size: 20px;"><span class="ink2 pill accent">releasing</span></td></tr>
-        <tr><td class="hand" style="font-size: 22px;">v0.3</td><td>Desktop session index, local Cowork, Homebrew tap</td><td class="hand" style="text-align: right; font-size: 20px;">planned</td></tr>
+        <tr><td class="hand" style="font-size: 22px;">v0.2</td><td><span class="mono" style="font-size: 13px;">claude agents</span> + Codex rollout pollers, <span class="mono" style="font-size: 13px;">focus</span>, daemon, notifications</td><td class="hand" style="text-align: right; font-size: 20px;">shipped</td></tr>
+        <tr><td class="hand" style="font-size: 22px;">v0.3</td><td>Homebrew tap, Claude Desktop session index</td><td class="hand" style="text-align: right; font-size: 20px;"><span class="ink2 pill accent">shipped</span></td></tr>
         <tr><td class="hand" style="font-size: 22px;">v1+</td><td>Web view on the same store, Gemini / OpenCode collectors, cloud sessions, team mode</td><td class="hand" style="text-align: right; font-size: 20px;">later</td></tr>
       </table>
     </div>
